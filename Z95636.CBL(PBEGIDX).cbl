@@ -102,6 +102,8 @@
               MOVE ZEROES TO IDX-DATE
               MOVE ZEROES TO IDX-BALANCE
               WRITE IDX-REC
+              MOVE IDX-NAME TO LS-NAME-TO
+              MOVE IDX-SURNAME TO LS-SURNAME-TO
               MOVE IDX-ST TO LS-RC
               MOVE 0 TO FLAG
            END-IF.
