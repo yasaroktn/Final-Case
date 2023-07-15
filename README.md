@@ -3,13 +3,13 @@
 # FINALEX Programı
 
 ## Kullanım Talimatları
-Bu programın çalışabilmesi için bir COBOL derleyicisine ve çalıştırma ortamına ihtiyaç vardır.
+1. Bu programın çalışabilmesi için bir COBOL derleyicisine ve çalıştırma ortamına ihtiyaç vardır.
 
-Programın kullanacağı giriş ve çıkış dosyaları tanımlanmalıdır. Giriş dosyası (INP-FILE) ve çıkış dosyası (OUT-FILE) için FILE-CONTROL bölümünde SELECT ifadeleri kullanılır. Dosya yolları bu ifadelerde belirtilmelidir.
+2. Programın kullanacağı giriş ve çıkış dosyaları tanımlanmalıdır. Giriş dosyası (INP-FILE) ve çıkış dosyası (OUT-FILE) için FILE-CONTROL bölümünde SELECT ifadeleri kullanılır. Dosya yolları bu ifadelerde belirtilmelidir.
 
-Program, çıkış dosyasına başlık bilgileri yazdırmak için HEADER-1, HEADER-2 ve HEADER-3 veri alanlarını kullanır. Bu veri alanları, başlık bilgilerini içeren sabit metinleri içerir.
+3. Program, çıkış dosyasına başlık bilgileri yazdırmak için HEADER-1, HEADER-2 ve HEADER-3 veri alanlarını kullanır. Bu veri alanları, başlık bilgilerini içeren sabit metinleri içerir.
 
-Programın çalışma işlemleri PROCEDURE DIVISION bölümünde tanımlanmıştır. Ana işlem, 0000-MAIN etiketiyle başlar. İşlem adımları şunlardır:
+4. Programın çalışma işlemleri PROCEDURE DIVISION bölümünde tanımlanmıştır. Ana işlem, 0000-MAIN etiketiyle başlar. İşlem adımları şunlardır:
 
 **H100-OPEN-FILES**: INPUT ve OUTPUT dosyalarını açar.
 **H110-OPEN-CONTROL**: INPUT ve OUTPUT dosyalarının açılıp açılmadığını kontrol eder.
@@ -41,7 +41,36 @@ Bir sonraki giriş kaydı okunur ve işlem devam eder.
 Alt Programın İşlemleri
 **WS-FUNC-OPEN**: Bu işlem, VSAM dosyasını açar. Dosya, SELECT ifadesiyle belirtilen dosya tanımına göre açılır.Dosya açma işlemi, OPEN I-O ifadesi kullanılarak gerçekleştirilir. Bu işlem, dosyanın okuma ve yazma işlemlerine hazır hale getirilmesini sağlar.
 **WS-FUNC-WRITE**: Bu işlem, VSAM dosyasına yeni bir kayıt yazmak için kullanılır. Dosyaya yazma işlemi, WRITE ifadesiyle gerçekleştirilir. İşlem öncesi, yeni kayıt verileri ilgili alanlara atanır ve ardından WRITE ifadesiyle kayıt dosyaya yazılır.
-**WS-FUNC-UPDATE**: Bu işlem, var olan bir kaydı güncellemek için VSAM dosyasını kullanır. Güncelleme işlemi, REWRITE ifadesiyle gerçekleştirilir. İlgili kayıt önce okunur, ardından güncellenen veriler ilgili alanlara atanır ve REWRITE ifadesiyle kayıt dosyaya geri yazılır.
+ **WS-FUNC-UPDATE**: Bu işlem, var olan bir kaydı güncellemek için VSAM dosyasını kullanır. Güncelleme işlemi, REWRITE ifadesiyle gerçekleştirilir. İlgili kayıt önce okunur, ardından güncellenen veriler ilgili alanlara atanır ve REWRITE ifadesiyle kayıt dosyaya geri yazılır.
 **WS-FUNC-DELETE**: Bu işlem, var olan bir kaydı silmek için VSAM dosyasını kullanır. Kayıt silme işlemi, DELETE ifadesiyle gerçekleştirilir. İlgili kayıt, DELETE ifadesiyle doğrudan dosyadan silinir.Bu işlem sonrasında dosyanın fiziksel boyutu da dinamik olarak küçültülebilir.
 **WS-FUNC-READ**: Bu işlem, VSAM dosyasından bir kaydı okur. Okuma işlemi, READ ifadesiyle gerçekleştirilir. İlgili kayıt, READ ifadesiyle dosyadan okunur ve ilgili alanlara atanır. Bu işlem, dosyayı sırasıyla okuyarak kayıtları işlemek için kullanılır.
 **WS-FUNC-CLOSE**: Bu işlem, VSAM dosyasını kapatır. Dosya kapatma işlemi, CLOSE ifadesiyle gerçekleştirilir. Dosya kapatıldıktan sonra, dosyaya erişim sonlanır.
+
+# FINALEXJ.JCL
+
+## JCL Adımları 
+
+* DELET100 EXEC PGM=IDCAMS: VSAM dosyasını silmek için IDCAMS programı kullanılır.
+* SORT0200 EXEC PGM=SORT: Verileri belirli bir sıraya göre sıralamak için SORT programı kullanılır.
+* DELET300 EXEC PGM=IEFBR14: Bir MOD dosyasını silmek için IEFBR14 programı kullanılır.
+* SORT0400 EXEC PGM=SORT: Verileri kopyalamak ve formatlamak için SORT programı kullanılır.
+* DELET500 EXEC PGM=IDCAMS: VSAM kümesini silmek için IDCAMS programı kullanılır.
+* REPRO600 EXEC PGM=IDCAMS: Verileri bir kaynaktan başka bir kaynağa kopyalamak için IDCAMS programı kullanılır.
+
+# IDXDATAJ.JCL
+
+## JCL Adımları 
+
+* DELET100 EXEC PGM=IDCAMS: QSAM dosyasını silmek için IDCAMS programı kullanılır.
+* SORT0200 EXEC PGM=SORT: QSAM dosyasını sıralamak için SORT programı kullanılır.
+* DELET300 EXEC PGM=IEFBR14: Bir MOD dosyasını silmek için IEFBR14 programı kullanılır.
+* SORT0400 EXEC PGM=SORT: Verileri kopyalamak ve formatlamak için SORT programı kullanılır.
+* DELET500 EXEC PGM=IDCAMS: VSAM kümesini silmek için IDCAMS programı kullanılır.
+* REPRO600 EXEC PGM=IDCAMS: Verileri bir kaynaktan başka bir kaynağa kopyalamak için IDCAMS programı kullanılır.
+
+# INPFILEJ.JCL
+
+## JCL Adımları
+
+* DELET100 EXEC PGM=IDCAMS: NONVSAM dosyasını silmek için IDCAMS programı kullanılır.
+* SORT0200 EXEC PGM=SORT: Verileri kopyalamak ve sıralamak için SORT programı kullanılır.
