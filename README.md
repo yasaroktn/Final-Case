@@ -85,8 +85,8 @@ Alt Programın İşlemleri
  _____________  __  _________________________     _________________________     _________________________
  2  10001  840  22  THIS RECORD ALREADY EXIST     MEHMET         AYDIN
  2  20001  949  00  RECORD WRITTED SUCCESSFULLY                                 YASAR          OKTEN
- 3  10002  840  00  SPACE NOT FOUND               MUSTAFA        YILMAZ         MUSTAFA        YILMEZ
- 3  10002  949  00  FILE UPDATED SUCCESSFULLY     M   US T A FA  YILMAZ         MUSTAFA        YILMEZ
+ 3  10002  840  00  SPACE NOT FOUND               MUSTAFA        ATES           MUSTAFA        ETIS
+ 3  10002  949  00  FILE UPDATED SUCCESSFULLY     M   US T A FA  ATES           MUSTAFA        ETIS
  3  20002  949  23  WRONG RECORD RC : 23
  4  10003  840  00  RECORD DELETED SUCCESSFULLY
  4  20003  840  23  WRONG RECORD RC : 23
