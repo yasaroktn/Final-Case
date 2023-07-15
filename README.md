@@ -78,12 +78,12 @@ Alt Programın İşlemleri
 # OUTPUT FILE(QSAM.OUT)
 
 ```vbnet
-FINAL PROJECT    AUTHOR : YASAR OKTEN
+ FINAL PROJECT    AUTHOR : YASAR OKTEN
  
  PROCESS TYPE   RC  EXPLANATION                   NAME-SURNAME FROM             NAME-SURNAME TO
  _____________  __  _________________________     _________________________     _________________________
  _____________  __  _________________________     _________________________     _________________________
- 2  10001  840  22  THIS RECORD ALREADY EXIST
+ 2  10001  840  22  THIS RECORD ALREADY EXIST     MEHMET         AYDIN
  2  20001  949  00  RECORD WRITTED SUCCESSFULLY                                 YASAR          OKTEN
  3  10002  840  00  SPACE NOT FOUND               MUSTAFA        YILMAZ         MUSTAFA        YILMEZ
  3  10002  949  00  FILE UPDATED SUCCESSFULLY     M   US T A FA  YILMAZ         MUSTAFA        YILMEZ

@@ -94,6 +94,8 @@
            IF FLAG = 0
               MOVE 'THIS RECORD ALREADY EXIST' TO LS-WRONG-EXP
               WRITE IDX-REC
+              MOVE IDX-NAME TO LS-NAME-FROM
+              MOVE IDX-SURNAME TO LS-SURNAME-FROM
               MOVE IDX-ST TO LS-RC
            ELSE
               MOVE 'RECORD WRITTED SUCCESSFULLY' TO LS-WRONG-EXP
