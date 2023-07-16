@@ -131,6 +131,12 @@
            MOVE SPACES TO OUT-REC.
        H200-WRITE-END. EXIT.
       *--------------------------------
+      *WS-PBEGIDX adlı bir alt program WS-SUB-AREA parametresiyle 
+      *çağrılır. Bu çağrı ile işlem verileri hazırlanır.
+      *Daha sonra, WS-SUB-FUNC değeri OREC-PROCESS-TYPE değişkenine, 
+      *WS-SUB-ID değeri OUT-ID-O değişkenine, WS-SUB-CURR değeri 
+      *OUT-CURR-O değişkenine, WS-SUB-RC değeri OUT-RC-O değişkenine, 
+      *WS-SUB-DATA değeri de OUT-DATA-O değişkenine atanır.
        H300-READ-CONTROL-MOVE.
            IF (INP-ST NOT = 0) AND (INP-ST NOT = 97)
            DISPLAY 'UNABLE TO READ INPUT FILE: ' INP-ST
@@ -149,7 +155,7 @@
            MOVE WS-SUB-DATA TO OUT-DATA-O.
            WRITE OUT-REC.
            READ INP-FILE.
-       H200-END. EXIT.
+       H300-END. EXIT.
       *--------------------------------
        H999-PROGRAM-EXIT.
            CLOSE INP-FILE.
