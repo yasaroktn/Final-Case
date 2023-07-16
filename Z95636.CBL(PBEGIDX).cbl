@@ -79,6 +79,9 @@
            END-EVALUATE.
        0000-END. EXIT.
       *--------------------------------
+      *Bu bölüm, VSAM dosyasının açılmasını sağlayan H100-OPEN-FILES  
+      *adımını içerir. İndeks dosyası (IDX-FILE) I-O (input-output)
+      *modunda açılır.
        H100-OPEN-FILES.
            OPEN I-O IDX-FILE.
            IF (IDX-ST NOT = 0) AND (IDX-ST NOT = 97)
@@ -90,6 +93,11 @@
        H100-END.
       *--------------------------------
        H200-WRITE-RECORD.
+      *Eğer FLAG 0'sa bu durumda kayıt zaten mevcuttur hata mesajı
+      *yazdırılıp GOBACK komutu ile ana programa dönülür.
+      *Eğer ki FLAG 1'se bu durumda böyle bir kayıt yok demektir bu
+      *durumda yeni kayıt oluşturulur ve isim soy isim kısmına benim
+      *adım soyadım işlenir.
            PERFORM H500-READ-RECORD
            IF FLAG = 0
               MOVE 'THIS RECORD ALREADY EXIST' TO LS-WRONG-EXP
@@ -112,6 +120,15 @@
            GOBACK.
        H200-END. EXIT.
       *--------------------------------
+      *Döngü oluşturularak isim bölümünde ki boşluklar geçilerek sadece
+      *karakterler LS-NAME-TO değişkenine aktarılır.
+      *daha sonrasında isimin eski halini tutan LS-NAME-FROM ile
+      *LS-NAME-TO eşit mi değil mi diye kontrol edilir. Eğer ki eşitse
+      *bu durumda anlarız ismin önceki hali ile şuan ki hali aynıdır.
+      *Eğer ki eşit değilsede değişim oluşmuştur bu durumlara göre hata
+      *mesajı döndürürüz.
+      *Daha sonrasında INSPECT komutunu kullanarak önce soyisimde ki
+      *E harflerini I daha sonra A harflerini E yaparız.
        H300-UPDATE-RECORD.
            PERFORM H500-READ-RECORD.
            MOVE IDX-NAME TO LS-NAME-FROM.
@@ -138,6 +155,9 @@
            GOBACK.
        H300-END. EXIT.
       *--------------------------------
+      *DELETE komutu kullanılarak IDX-FILE içindeki kayıt silinir.
+      *Silme işlemi başarılı bir şekilde gerçekleşirse, "RECORD DELETED 
+      *SUCCESSFULLY" mesajı LS-WRONG-EXP değişkenine atanır
        H400-DELETE-RECORD.
            PERFORM H500-READ-RECORD.
            MOVE IDX-NAME TO LS-NAME-FROM
@@ -147,6 +167,11 @@
            GOBACK.
        H400-END. EXIT.
       *--------------------------------
+      *Eğer okuma işlemi başarılı olmazsa (INVALID KEY durumu), 
+      *IDX-ST değeri LS-RC değişkenine atanır. Eğer işlem WS-FUNC-WRITE 
+      *ise, FLAG değişkenine 1 atanır. Aksi takdirde, WRONG RECORD 
+      *mesajı IDX-ST değeriyle birleştirilerek LS-WRONG-EXP değişkenine 
+      *atanır ve GOBACK komutuyla işlem sonlandırılır.
        H500-READ-RECORD.
            MOVE LS-ID TO IDX-ID.
            MOVE LS-CURR TO IDX-CURR.
@@ -175,6 +200,7 @@
            END-IF.
        H500-END. EXIT.
       *--------------------------------
+      *INDEX dosyası kapatılır.
        H999-CLOSE-FILES.
            CLOSE IDX-FILE.
            GOBACK.
