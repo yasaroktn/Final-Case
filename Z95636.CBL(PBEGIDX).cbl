@@ -140,6 +140,8 @@
       *--------------------------------
        H400-DELETE-RECORD.
            PERFORM H500-READ-RECORD.
+           MOVE IDX-NAME TO LS-NAME-FROM
+           MOVE IDX-SURNAME TO LS-SURNAME-FROM
            DELETE IDX-FILE.
            MOVE 'RECORD DELETED SUCCESSFULLY' TO LS-WRONG-EXP.
            GOBACK.
